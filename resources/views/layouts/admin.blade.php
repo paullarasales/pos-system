@@ -60,12 +60,56 @@
                 </div>
 
                 <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
-                    <div class="{{ request()->routeIs('dashboard') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
+                    <div class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                         </svg>
                         <x-side-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')" class="text-lg text-black font-medium mt-1 flex items-start">
                             {{ __('Dashboard')}}
+                        </x-side-nav-link>
+                    </div>
+                </nav>
+
+                <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
+                    <div class="{{ request()->routeIs('admin.product') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                        </svg>
+                        <x-side-nav-link href="{{ route('admin.product') }}" :active="request()->routeIs('admin.product')" class="text-lg text-black font-medium mt-1 flex items-start">
+                            {{ __('Product')}}
+                        </x-side-nav-link>
+                    </div>
+                </nav>
+
+                <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
+                    <div class="{{ request()->routeIs('admin.inventory') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                        </svg>
+                        <x-side-nav-link href="{{ route('admin.inventory') }}" :active="request()->routeIs('admin.inventory')" class="text-lg text-black font-medium mt-1 flex items-start">
+                            {{ __('Inventory')}}
+                        </x-side-nav-link>
+                    </div>
+                </nav>
+
+                <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
+                    <div class="{{ request()->routeIs('admin.sales') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                        </svg>
+                        <x-side-nav-link href="{{ route('admin.sales') }}" :active="request()->routeIs('admin.sales')" class="text-lg text-black font-medium mt-1 flex items-start">
+                            {{ __('Product')}}
+                        </x-side-nav-link>
+                    </div>
+                </nav>
+
+                <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
+                    <div class="{{ request()->routeIs('admin.manageUser') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                        </svg>
+                        <x-side-nav-link href="{{ route('admin.manageUser') }}" :active="request()->routeIs('admin.manageUser')" class="text-lg text-black font-medium mt-1 flex items-start">
+                            {{ __('Manage User')}}
                         </x-side-nav-link>
                     </div>
                 </nav>
@@ -130,54 +174,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const notifElement = document.getElementById('notif-count');
-            const messageElement = document.getElementById('message-count');
-
-            async function getCount() {
-                try {
-                    const response = await fetch('/admin/unreadnotification');
-
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    const data = await response.json();
-                    console.log('Fetched counts', data);
-                    const totalCount = data.unreadVerification + data.unreadOrder;
-                    if (notifElement && totalCount > 0) {
-                        notifElement.textContent = totalCount;
-                        notifElement.style.display = 'inline-block';
-                    } else if (notifElement) {
-                        notifElement.style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error('Error fetching the count of the notification', error);
-                }
-            }
-
-            async function getMessageCount() {
-                try {
-                    const response = await fetch('/unread-messages');
-
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-
-                    const data = await response.json();
-
-                    const count = data.unreadMessage;
-
-                    if (messageElement && count > 0) {
-                        messageElement.textContent = count;
-                        messageElement.style.display = 'inline-block';
-                    } else if (messageElement) {
-                        messageElement.style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error('Error fetching the message count', error);
-                }
-            }
-            setInterval(getCount, 3000);
-            setInterval(getMessageCount, 3000);
+            
         });
     </script>
     @stack('scripts')

@@ -13,7 +13,8 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'quantity'
+        'quantity',
+        'photo'
     ];
 
     public function saleItems() 

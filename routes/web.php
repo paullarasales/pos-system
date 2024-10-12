@@ -16,7 +16,7 @@ Route::patch('/admin/profile', [AdminProfileController::class, 'update'])->name(
 Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->name('admin-profile.destroy');
 Route::get('/admin/product', [PagesController::class, 'product'])->name('admin.product');
 Route::get('/admin/inventory', [PagesController::class, 'inventory'])->name('admin.inventory');
-Route::get('/admin/sales', [PagesController::class, 'sales'])->name('admin.inventory');
+Route::get('/admin/sales', [PagesController::class, 'sales'])->name('admin.sales');
 Route::get('/admin/users', [PagesController::class, 'userManagement'])->name('admin.manageUser');
 
 //Others 
