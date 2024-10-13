@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class PagesController extends Controller
 {
@@ -13,7 +14,25 @@ class PagesController extends Controller
 
     public function product()
     {
-        return view('admin.product');
+        return view('admin.product-add');
+    }
+
+    public function productDisplay()
+    {
+        $products = Product::all();
+        
+        return view('admin.product', compact('products'));
+    }
+
+    public function edit(string $id)
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return redirect()->route('products.index')->with('error', 'Product not found.');
+        }
+
+        return view('admin.update-product', compact('product'));
     }
 
     public function inventory()

@@ -14,7 +14,9 @@ Route::get('/admin/dashboard', [PagesController::class, 'adminDashboard'])->name
 Route::get('/admin/profile', [AdminProfileController::class, 'edit'])->name('admin-profile.edit');
 Route::patch('/admin/profile', [AdminProfileController::class, 'update'])->name('admin-profile.update');
 Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->name('admin-profile.destroy');
-Route::get('/admin/product', [PagesController::class, 'product'])->name('admin.product');
+Route::get('/admin/product/add', [PagesController::class, 'product'])->name('admin.product');
+Route::get('/admin/product/update/{id}', [PagesController::class, 'edit'])->name('admin.edit');
+Route::get('/admin/product', [PagesController::class, 'productDisplay'])->name('admin.product-display');
 Route::get('/admin/inventory', [PagesController::class, 'inventory'])->name('admin.inventory');
 Route::get('/admin/sales', [PagesController::class, 'sales'])->name('admin.sales');
 Route::get('/admin/users', [PagesController::class, 'userManagement'])->name('admin.manageUser');

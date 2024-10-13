@@ -58,7 +58,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -66,16 +66,49 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return redirect()->route('products.index')->with('error', 'Product not found.');
+        }
+
+        return view('admin.update-product', compact('product'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+
+        if ($request->hasFile('photo')) {
+            if ($product->photo) {
+                Storage::delete($product->photo);
+            }
+            $product->photo = $request->file('photo')->store('products');
+        }
+        $product->save();
+
+        return response()->json(['success' => 'Product updated successfully!',
+            'product' => $product,
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
