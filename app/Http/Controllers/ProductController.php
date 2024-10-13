@@ -37,6 +37,19 @@ class ProductController extends Controller
         ]);
 
         $product = Product::create($validatedData);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            $path = $file->storeAs('products', $filename, 'public');
+
+            $product->photo = $path;
+
+            $product->save();
+        }
+
         return response()->json(['message' => 'Product created successfully', 'product' => $product]);
     }
 
