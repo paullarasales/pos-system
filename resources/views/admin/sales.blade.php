@@ -24,10 +24,14 @@
         let chart;
 
         async function fetchMonthlyRevenue() {
-            const response = await fetch('http://localhost:8000/api/monthly-revenue');
+            const response = await fetch('http://192.168.2.100:8000/api/monthly-revenue');
             const data = await response.json();
 
-            const labels = data.monthly_revenue.map(item => item.month);
+            const labels = data.monthly_revenue.map(item => {
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                return `${monthNames[item.month - 1]} ${item.year}`;
+            });
+
             const revenues = data.monthly_revenue.map(item => item.revenue);
 
             const ctx = document.getElementById('revenueChart').getContext('2d');
@@ -66,7 +70,7 @@
         }
 
         async function fetchMostSoldProducts() {
-            const response = await fetch('http://localhost:8000/api/most-sold-products');
+            const response = await fetch('http://192.168.2.100:8000/api/most-sold-products');
             const data = await response.json();
 
             const tableBody = document.getElementById('mostSoldProductsTable');
