@@ -52,49 +52,48 @@
 
     <script>
         document.getElementById('update-product-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    document.getElementById('error-messages').classList.add('d-none');
-    document.getElementById('success-message').classList.add('d-none');
-    document.getElementById('error-list').innerHTML = '';
+        document.getElementById('error-messages').classList.add('d-none');
+        document.getElementById('success-message').classList.add('d-none');
+        document.getElementById('error-list').innerHTML = '';
 
-    const form = document.getElementById('update-product-form');
-    const formData = new FormData(form);
+        const form = document.getElementById('update-product-form');
+        const formData = new FormData(form);
 
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
-            },
-            body: formData
-        });
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
+                },
+                body: formData
+            });
 
-        const data = await response.json();
-        console.log("Response data:", data);
+            const data = await response.json();
+            console.log("Response data:", data);
 
-        if (response.ok) {
-            document.getElementById('success-message').textContent = data.success; // Set success message
-            document.getElementById('success-message').classList.remove('d-none');
+            if (response.ok) {
+                document.getElementById('success-message').textContent = data.success; // Set success message
+                document.getElementById('success-message').classList.remove('d-none');
 
-            setTimeout(() => {
-                window.location.href = '/admin/product';
-            }, 1000);
-        } else {
-            if (data.errors) {
-                const errorList = document.getElementById('error-list');
-                data.errors.forEach(error => {
-                    const li = document.createElement('li');
-                    li.textContent = error;
-                    errorList.appendChild(li);
-                });
-                document.getElementById('error-messages').classList.remove('d-none');
+                setTimeout(() => {
+                    window.location.href = '/admin/product';
+                }, 1000);
+            } else {
+                if (data.errors) {
+                    const errorList = document.getElementById('error-list');
+                    data.errors.forEach(error => {
+                        const li = document.createElement('li');
+                        li.textContent = error;
+                        errorList.appendChild(li);
+                    });
+                    document.getElementById('error-messages').classList.remove('d-none');
+                }
             }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-
+    });
     </script>
 </x-admin-layout>
