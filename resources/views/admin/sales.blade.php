@@ -72,7 +72,7 @@
                 }
             });
         }
-
+        //added product chart
         async function fetchMostSoldProducts() {
             const response = await fetch('http://192.168.2.103:8000/api/most-sold-products');
             const data = await response.json();
