@@ -2,12 +2,17 @@
 
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('inventory', InventoryController::class);
+Route::resource('products', ProductController::class);
 
 //Admin Routes
 Route::get('/admin/dashboard', [PagesController::class, 'adminDashboard'])->name('admin.dashboard');
@@ -17,7 +22,6 @@ Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->nam
 Route::get('/admin/product/add', [PagesController::class, 'product'])->name('admin.product');
 Route::get('/admin/product/update/{id}', [PagesController::class, 'edit'])->name('admin.edit');
 Route::get('/admin/product', [PagesController::class, 'productDisplay'])->name('admin.product-display');
-Route::get('/admin/inventory', [PagesController::class, 'inventory'])->name('admin.inventory');
 Route::get('/admin/sales', [PagesController::class, 'sales'])->name('admin.sales');
 Route::get('/admin/users', [PagesController::class, 'userManagement'])->name('admin.manageUser');
 
