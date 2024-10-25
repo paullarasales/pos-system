@@ -39,7 +39,7 @@
             const revenues = data.monthly_revenue.map(item => item.revenue);
 
             const ctx = document.getElementById('revenueChart').getContext('2d');
-            if (revenueChart) revenueChart.destroy(); 
+            if (revenueChart) revenueChart.destroy();
 
             const colors = revenues.map((revenue, index) => {
                 return revenue >= (revenues[index - 1] || 0) ? 'rgba(54, 162, 235, 1)' : 'rgba(255, 99, 132, 1)';

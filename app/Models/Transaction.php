@@ -5,21 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SaleItem extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'sale_id',
-        'product_id',
-        'quantity',
-        'price'
-    ];
-
-    public function sale() 
-    {
-        return $this->belongsTo(Sales::class);
-    }
+    protected $fillable = ['product_id', 'quantity', 'date'];
 
     public function product()
     {
