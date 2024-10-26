@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::get('/', function () {
 });
 
 Route::resource('inventory', InventoryController::class);
-Route::resource('products', ProductController::class);
+Route::resource('product', ProductController::class);
 
 //Admin Routes
 Route::get('/admin/dashboard', [PagesController::class, 'adminDashboard'])->name('admin.dashboard');
@@ -36,5 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/cart', [CashierController::class, 'showCart'])->name('cashier.cart');
+Route::post('/add-to-cart/{id}', [CashierController::class, 'addToCart'])->name('cashier.addToCart');
+Route::post('/checkout', [CashierController::class, 'checkout'])->name('cashier.checkout');
 
 require __DIR__.'/auth.php';

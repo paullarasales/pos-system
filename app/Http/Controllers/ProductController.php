@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\RawMaterial;
 
 class ProductController extends Controller
 {
@@ -12,7 +13,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        $products = Product::with('materials')->get();
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -20,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $rawMaterials = RawMaterial::all();
+        return view('products.create', compact('rawMaterials'));
     }
 
     /**
@@ -28,27 +31,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
+        $request->validate([
+            'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'photo' => 'nullable|image'
+            'materials' => 'array',
+            'materials.*.selected' => 'boolean',
+            'materials.*.quantity' => 'required|numeric|min:1',
         ]);
 
-        $product = Product::create($validatedData);
+        $product = Product::create($request->only(['name', 'price']));
 
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-
-            $path = $file->storeAs('products', $filename, 'public');
-
-            $product->photo = $path;
-
-            $product->save();
+        foreach ($request->materials as $materialId => $material) {
+            if (isset($material['selected']) && $material['selected'] == '1') {
+                $quantity = $material['quantity'] ?? 0;
+                $product->materials()->attach($materialId, ['quantity' => $quantity]);
+            }
         }
 
-        return response()->json(['message' => 'Product created successfully', 'product' => $product]);
+        return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -62,16 +62,13 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $product = Product::find($id);
-        
-        if (!$product) {
-            return redirect()->route('products.index')->with('error', 'Product not found.');
-        }
-
-        return view('admin.update-product', compact('product'));
+        $product = Product::findOrFail($id);
+        $rawMaterials = RawMaterial::all(); 
+        return view('products.edit', compact('product', 'rawMaterials'));
     }
+
 
 
     /**
@@ -82,25 +79,22 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $product = Product::findOrFail($id);
-
-        $product->name = $request->name;
-        $product->price = $request->price;
-
-        if ($request->hasFile('photo')) {
-            if ($product->photo) {
-                Storage::delete($product->photo);
+        $product->update($request->only(['name', 'price']));
+    
+        if ($request->filled('raw_materials')) {
+            $materials = [];
+            foreach ($request->raw_materials as $material_id => $quantity) {
+                $materials[$material_id] = ['quantity' => $quantity];
             }
-            $product->photo = $request->file('photo')->store('products');
+            $product->materials()->sync($materials);
+        } else {
+            $product->materials()->detach();
         }
-        $product->save();
 
-        return response()->json(['success' => 'Product updated successfully!',
-            'product' => $product,
-        ]);
+        return redirect()->route('product.index')->with('success', 'Product updated successfully');
     }
 
 

@@ -52,26 +52,23 @@ class InventoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RawMaterial $rawMaterial)
+    public function edit($id)
     {
+        $rawMaterial = RawMaterial::findOrFail($id);
         return view('inventory.edit', compact('rawMaterial'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RawMaterial $rawMaterial)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'quantity' => 'required|integer|min:1',
-            'unit' => 'required|string|max:50'
-        ]);
+        $rawMaterial = RawMaterial::findOrFail($id);
+        $rawMaterial->update($request->only(['name', 'quantity', 'unit']));
 
-        $rawMaterial->update($request->all());
-        
-        return redirect()->route('inventory.index')->with('success', 'Raw material updated successfully');
+        return redirect()->route('inventory.index')->with('success', 'Raw Material updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
