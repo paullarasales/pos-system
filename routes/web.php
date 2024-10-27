@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
@@ -23,13 +24,10 @@ Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->nam
 Route::get('/admin/product/add', [PagesController::class, 'product'])->name('admin.product');
 Route::get('/admin/product/update/{id}', [PagesController::class, 'edit'])->name('admin.edit');
 Route::get('/admin/product', [PagesController::class, 'productDisplay'])->name('admin.product-display');
-Route::get('/admin/sales', [PagesController::class, 'sales'])->name('admin.sales');
+Route::get('/admin/sales/{year}', [PagesController::class, 'sales'])->name('admin.sales');
 Route::get('/admin/users', [PagesController::class, 'userManagement'])->name('admin.manageUser');
 
-//Others 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,5 +38,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/cart', [CashierController::class, 'showCart'])->name('cashier.cart');
 Route::post('/add-to-cart/{id}', [CashierController::class, 'addToCart'])->name('cashier.addToCart');
 Route::post('/checkout', [CashierController::class, 'checkout'])->name('cashier.checkout');
+
+Route::get('reports/monthly/{year}', [ReportController::class, 'nonJSON'])->name('reports.monthly');
+
 
 require __DIR__.'/auth.php';

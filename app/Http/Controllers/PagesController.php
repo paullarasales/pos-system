@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
 
 class PagesController extends Controller
 {
@@ -40,7 +41,7 @@ class PagesController extends Controller
         return view('admin.inventory');
     }
 
-    public function sales()
+    public function sales($year)
     {
         return view('admin.sales');
     }

@@ -71,18 +71,6 @@
                 </nav>
 
                 <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
-                    <div class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="{{ request()->routeIs('admin.dashboard') ? '#8B5CF6' : '#000000' }}" viewBox="0 0 24 24" stroke-width="1.5" class="ml-10 w-9 h-9">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
-                        </svg>
-                        <x-side-nav-link href="{{ route('cashier.cart') }}" :active="request()->routeIs('cashier.cart')" class="text-lg text-black font-medium mt-1 flex items-start">
-                            {{ __('Cart')}}
-                        </x-side-nav-link>
-                    </div>
-                </nav>
-
-
-                <nav class="flex flex-col mt-10 p-3 gap-3 w-full">
                     <div class="{{ request()->routeIs('admin.inventory') ? 'bg-gray-200 w-full text-2xl font-md' : 'w-44' }} flex items-center gap-2 rounded-sm h-12">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ request()->routeIs('admin.inventory')}}" class="ml-10 h-9 w-9">
                             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
@@ -101,7 +89,7 @@
                             <path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 0 1 .968-.431l5.942 2.28a.75.75 0 0 1 .431.97l-2.28 5.94a.75.75 0 1 1-1.4-.537l1.63-4.251-1.086.484a11.2 11.2 0 0 0-5.45 5.173.75.75 0 0 1-1.199.19L9 12.312l-6.22 6.22a.75.75 0 0 1-1.06-1.061l6.75-6.75a.75.75 0 0 1 1.06 0l3.606 3.606a12.695 12.695 0 0 1 5.68-4.974l1.086-.483-4.251-1.632a.75.75 0 0 1-.432-.97Z" clip-rule="evenodd" />
                         </svg>
                                         
-                        <x-side-nav-link href="{{ route('admin.sales') }}" :active="request()->routeIs('admin.sales')" class="text-lg text-black font-medium mt-1 flex items-start">
+                        <x-side-nav-link href="{{ route('admin.sales', ['year' => now()->year]) }}" :active="request()->routeIs('admin.sales')" class="text-lg text-black font-medium mt-1 flex items-start">
                             {{ __('Sales Report')}}
                         </x-side-nav-link>
                     </div>
@@ -143,11 +131,7 @@
                                 <div x-data="{ open: false }" class="relative ms-4 flex flex-row items-center justify-evenly w-48">
                                     <button @click="open = !open" class="relative inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-lg rounded-md text-black-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                         <div class="flex items-center justify-end w-20">
-                                            <div class="flex">
-                                                @if(Auth::user()->photo)
-                                                <img class="w-10 h-10 rounded-full ml-2 border-solid border-2 border-sky-500" src="{{ asset(Auth::user()->photo) }}" alt="Profile Image">
-                                                @endif
-                                            </div>
+                                            <div>{{ Auth::user()->name }}</div>
                                             <div class="ms-1 mt-1">
                                                 <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />

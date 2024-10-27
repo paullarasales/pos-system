@@ -17,6 +17,11 @@ class Product extends Model
                     ->withPivot('quantity');
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     /**
      * Process the sale and reduce raw material quantities.
      *
