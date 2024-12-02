@@ -28,11 +28,6 @@
                         <td class="py-2 px-4 border-b">{{ $material->unit }}</td>
                         <td class="py-2 px-4 border-b">
                             <a href="{{ route('inventory.edit', $material) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
-                            <form action="{{ route('inventory.destroy', $material) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700 ml-2">Delete</button>
-                            </form>
                         </td>
                     </tr>
                 @endforeach

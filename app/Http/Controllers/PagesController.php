@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Employee;
 use App\Models\Order;
 
 class PagesController extends Controller
@@ -48,6 +49,7 @@ class PagesController extends Controller
 
     public function userManagement()
     {
-        return view('admin.users');
+        $employees = Employee::all();
+        return view('admin.users', compact('employees'));
     }
 }

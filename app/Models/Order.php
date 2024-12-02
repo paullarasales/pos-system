@@ -9,15 +9,15 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'total_amount'];
+    protected $fillable = ['employee_id', 'total_amount', 'user_id'];
 
-    public function OrderItems()
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function user()
+    public function employee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
 }

@@ -1,3 +1,4 @@
+<!-- resources/views/reports/monthly.blade.php -->
 <x-app-layout>
     <div class="container mx-auto py-6">
         <h1 class="text-2xl font-bold">Monthly Sales Report for {{ $year }}</h1>
@@ -7,6 +8,7 @@
         </div>
     </div>
 
+    <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('revenueChart').getContext('2d');

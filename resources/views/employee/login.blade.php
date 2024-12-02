@@ -11,16 +11,18 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('employee.login') }}">
                 @csrf
 
                 <!-- Email Address -->
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-semibold mb-2">{{ __('Email') }}</label>
-                    <x-text-input id="email"
+                    <label for="employee_number"
+                        class="block text-gray-700 font-semibold mb-2">{{ __('Employee Number') }}</label>
+                    <x-text-input id="employee_number"
                         class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="text-red-500 mt-1" />
+                        type="text" name="employee_number" :value="old('employee_number')" required autofocus
+                        autocomplete="username" />
+                    <x-input-error :messages="$errors->get('employee_number')" class="text-red-500 mt-1" />
                 </div>
 
                 <!-- Password -->

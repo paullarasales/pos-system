@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RawMaterial;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -12,9 +13,13 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $materials = RawMaterial::all();
-
-        return view('inventory.index', compact('materials'));
+        if (Auth::check()) {
+            $user = Auth::user();
+            $materials = RawMaterial::all();
+            return view('inventory.index', compact('materials', 'user'));
+        } else {
+            return redirect()->route('login')->with('message', 'Please log in to access the dashboard.');
+        }
     }
 
     /**

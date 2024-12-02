@@ -11,31 +11,37 @@ use App\Models\Order;
 
 class CashierController extends Controller
 {
-    public function showCart()
+    public function showCart(Request $request)
     {
         $cart = Session::get('cart', []);
-        $products = Product::all();
+    
+        $query = $request->input('search');
+        if ($query) {
+            $products = Product::where('name', 'LIKE', "%{$query}%")->get();
+        } else {
+            $products = Product::all();
+        }
 
         return view('cashier.cart', compact('cart', 'products'));
     }
 
-    public function addToCart(Request $request, $id)
+    public function addToCart($id)
     {
         $product = Product::findOrFail($id);
         $cart = Session::get('cart', []);
-
+    
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
                 'name' => $product->name,
-                'price' => $product->price,
+                'price' => $product->price, // Ensure price is included
                 'quantity' => 1,
             ];
         }
-
+    
         Session::put('cart', $cart);
-        return redirect()->route('cashier.cart')->with('success', 'Product added to cart!');
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
     public function checkout(Request $request)
@@ -45,11 +51,20 @@ class CashierController extends Controller
             return back()->withErrors(['cart' => 'Your cart is empty.']);
         }
 
-        DB::transaction(function () use ($cart) {
+        
+        \Log::info('Cart contents:', $cart);
+
+        if (!auth()->check()) {
+            return back()->withErrors(['auth' => 'You must be logged in to checkout.']);
+        }
+
+        $employeeId = auth()->id(); 
+
+        DB::transaction(function () use ($cart, $employeeId) {
             $totalAmount = collect($cart)->sum(fn ($item) => $item['price'] * $item['quantity']);
 
             $order = Order::create([
-                'user_id' => auth()->id(),
+                'employee_id' => $employeeId,
                 'total_amount' => $totalAmount,
             ]);
 
@@ -59,7 +74,7 @@ class CashierController extends Controller
                     $order->orderItems()->create([
                         'product_id' => $productId,
                         'quantity' => $item['quantity'],
-                        'price' => $item['price'],
+                        'price' => $item['price'], // Ensure price is accessed correctly
                     ]);
 
                     foreach ($product->materials as $material) {
@@ -76,9 +91,14 @@ class CashierController extends Controller
                 }
             }
         });
+
         Session::forget('cart');
 
         return redirect()->route('cashier.cart')->with('success', 'Transaction completed successfully!');
     }
-
+    public function cancel()
+    {
+        Session::forget('cart');
+        return redirect()->route('cashier.cart')->with('success', 'Transaction cancelled successfully.');
+    }
 }

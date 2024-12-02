@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 
-Route::get('/monthly-sales/{year}', [ReportController::class, 'monthlyReport']);
+Route::get('/walk-in-report/{year}', [ReportController::class, 'monthlyReport']);
 Route::get('/non-json', [ReportController::class, 'nonJSOn']);
 
 

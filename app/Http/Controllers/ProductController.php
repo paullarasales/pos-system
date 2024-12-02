@@ -34,12 +34,20 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
             'materials' => 'array',
             'materials.*.selected' => 'boolean',
             'materials.*.quantity' => 'required|numeric|min:1',
         ]);
 
         $product = Product::create($request->only(['name', 'price']));
+
+        // Handle image upload
+        if ($request->hasFile('photo')) {
+            $imagePath = $request->file('photo')->move(public_path('products'), $request->file('photo')->getClientOriginalName());
+            $product->photo = 'products/' . $request->file('photo')->getClientOriginalName();
+            $product->save();
+        }
 
         foreach ($request->materials as $materialId => $material) {
             if (isset($material['selected']) && $material['selected'] == '1') {
@@ -79,24 +87,39 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+            'materials' => 'array',
         ]);
 
         $product = Product::findOrFail($id);
-        $product->update($request->only(['name', 'price']));
-    
-        if ($request->filled('raw_materials')) {
-            $materials = [];
-            foreach ($request->raw_materials as $material_id => $quantity) {
-                $materials[$material_id] = ['quantity' => $quantity];
+        $product->name = $request->name;
+        $product->price = $request->price;
+
+        // Handle image upload
+        if ($request->hasFile('photo')) {
+            // Optionally delete the old image if you want
+            if ($product->photo) {
+                unlink(public_path($product->photo)); // Delete old image
             }
-            $product->materials()->sync($materials);
-        } else {
-            $product->materials()->detach();
+            $imagePath = $request->file('photo')->move(public_path('products'), $request->file('photo')->getClientOriginalName());
+            $product->photo = 'products/' . $request->file('photo')->getClientOriginalName();
         }
 
-        return redirect()->route('product.index')->with('success', 'Product updated successfully');
-    }
+        $product->save();
 
+        $materials = $request->input('materials', []);
+        $syncData = [];
+
+        foreach ($materials as $materialId => $data) {
+            if (isset($data['selected']) && $data['selected'] == 1) {
+                $syncData[$materialId] = ['quantity' => $data['quantity'] ?? 0]; 
+            }
+        }
+
+        $product->materials()->sync($syncData);
+
+        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
+    }
 
     /**
      * Remove the specified resource from storage.
